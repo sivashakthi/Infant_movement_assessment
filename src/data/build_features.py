@@ -93,7 +93,9 @@ def main(data_set):
     # xy features
     bps = ['LAnkle', 'RAnkle', 'LWrist', 'RWrist']
     feature_xy = xdf[np.isin(xdf.bp, bps)].groupby(['bp','video']).apply(xy_features)
-    feature_xy = pd.pivot_table(feature_xy, index='video', columns=['bp'])
+    feature_xy1 = feature_xy.rename(columns={'video': 'videocolumn'})
+    feature_xy2 = feature_xy1.rename(columns={'bp': 'bpcolumn'})
+    feature_xy = pd.pivot_table(feature_xy2, index='video', columns=['bpcolumn'])
     l0 = feature_xy.columns.get_level_values(1)
     l1 = feature_xy.columns.get_level_values(0)
     cols = [l1[i]+'_'+l0[i] for i in range(len(l1))]

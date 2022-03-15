@@ -9,7 +9,7 @@ import seaborn as sns
 def main(path):
 
     features = pd.read_pickle(os.path.join(path,'features_merged.pkl'))
-
+    features = features.fillna(0)
     ref_stats = pd.DataFrame()
     ref_stats = features[features.category ==0].groupby(['feature_name','age_bracket', 'part'])['Value']\
     .apply(norm.fit).reset_index()
